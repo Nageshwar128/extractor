@@ -25,7 +25,7 @@ fi
 FILE=$(echo ${URL##*/} | inline-detox)
 EXTENSION=$(echo ${URL##*.} | inline-detox)
 UNZIP_DIR=${FILE/.$EXTENSION/}
-PARTITIONS="system vendor cust odm product systemex system_ext system_other"
+PARTITIONS="system vendor cust odm oem factory product modem systemex system_ext system_other"
 
 if [[ -d "$1" ]]; then
     echo 'Directory detected. Copying...'
