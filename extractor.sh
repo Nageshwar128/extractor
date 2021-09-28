@@ -15,7 +15,7 @@ if echo "$1" | grep -e '^\(https\?\|ftp\)://.*$' > /dev/null; then
         URL=$1
     fi
     cd "$PROJECT_DIR"/input || exit
-    { type -p aria2c > /dev/null 2>&1 && printf "Downloading File...\n" && aria2c -x16 -j"$(nproc)" "${URL}"; } || { printf "Downloading File...\n" && wget -q --show-progress --progress=bar:force "${URL}" || exit 1; }
+    { type -p aria2c > /dev/null 2>&1 && printf "Downloading File...\n" && aria2c -x16 -j"$(nproc)" "${URL}"; } || { printf "Downloading File...\n" && sudo apt install axel >> /dev/null 2>&1 && axel -q -a -n 78 "${URL}" || exit 1; }
     detox "${URL##*/}"
 else
     URL=$(printf "%s\n" "$1")
@@ -25,7 +25,7 @@ fi
 FILE=$(echo ${URL##*/} | inline-detox)
 EXTENSION=$(echo ${URL##*.} | inline-detox)
 UNZIP_DIR=${FILE/.$EXTENSION/}
-PARTITIONS="system vendor cust odm oem factory product modem xrom systemex system_ext"
+PARTITIONS="system vendor cust odm product systemex system_ext system_other"
 
 if [[ -d "$1" ]]; then
     echo 'Directory detected. Copying...'
