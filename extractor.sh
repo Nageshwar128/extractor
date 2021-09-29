@@ -12,7 +12,7 @@ sudo apt install detox
 if echo "$1" | grep -e '^\(https\?\|ftp\)://.*$' > /dev/null; then
     URL=$1
     cd "$PROJECT_DIR"/input || exit
-    echo "Downloading File...\n" && sudo apt install axel >> /dev/null 2>&1 && axel -q -a -n 78 "${URL}" || exit 1
+    echo "Downloading File..." && sudo apt install axel >> /dev/null 2>&1 && axel -q -a -n 78 "${URL}" || exit 1
     detox "${URL##*/}"
 else
     URL=$(printf "%s\n" "$1")
