@@ -129,4 +129,6 @@ find "$PROJECT_DIR"/working/"${UNZIP_DIR}" -type f -printf '%P\n' | sort | grep 
 
 echo "Dump done locally."
 
+cd "$PROJECT_DIR"/working/"${UNZIP_DIR}"
+
 
