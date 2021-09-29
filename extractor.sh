@@ -6,16 +6,12 @@ PROJECT_DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" >/dev/null && pwd )"
 # Create input & working directory if it does not exist
 mkdir -p "$PROJECT_DIR"/input "$PROJECT_DIR"/working
 
-# download or copy from local?
+sudo apt install detox
+
+# Just Download
 if echo "$1" | grep -e '^\(https\?\|ftp\)://.*$' > /dev/null; then
-    # 1DRV URL DIRECT LINK IMPLEMENTATION
-    if echo "$1" | grep -e '1drv.ms' > /dev/null; then
-        URL=`curl -I "$1" -s | grep location | sed -e "s/redir/download/g" | sed -e "s/location: //g"`
-    else
-        URL=$1
-    fi
     cd "$PROJECT_DIR"/input || exit
-    { type -p aria2c > /dev/null 2>&1 && printf "Downloading File...\n" && aria2c -x16 -j"$(nproc)" "${URL}"; } || { printf "Downloading File...\n" && sudo apt install axel >> /dev/null 2>&1 && axel -q -a -n 78 "${URL}" || exit 1; }
+    echo "Downloading File...\n" && sudo apt install axel >> /dev/null 2>&1 && axel -q -a -n 78 "${URL}" || exit 1
     detox "${URL##*/}"
 else
     URL=$(printf "%s\n" "$1")
